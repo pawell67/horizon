@@ -6,7 +6,7 @@
                 <h2 class="h6 m-0" v-if="ready">{{job.name}}</h2>
 
                 <div class="d-flex align-items-center">
-                    <template v-if="ready && job.status == 'pending'">
+                    <template v-if="$canManage && ready && job.status == 'pending'">
                         <button v-if="delayed" class="btn btn-primary btn-sm me-2" :disabled="busy" @click.prevent="runNow">
                             Run Now
                         </button>

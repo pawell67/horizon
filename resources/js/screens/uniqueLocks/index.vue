@@ -100,7 +100,7 @@
                     <th>Unique ID</th>
                     <th>Pending Job</th>
                     <th>Expires</th>
-                    <th class="text-end"></th>
+                    <th class="text-end" v-if="$canManage"></th>
                 </tr>
                 </thead>
 
@@ -118,7 +118,7 @@
                         </small>
                     </td>
                     <td class="table-fit text-muted">{{ expiresIn(lock.expires_in) }}</td>
-                    <td class="text-end table-fit">
+                    <td class="text-end table-fit" v-if="$canManage">
                         <button class="btn btn-outline-danger btn-sm" :disabled="releasing.includes(lock.key)" @click="release(lock)">
                             Release
                         </button>

@@ -276,7 +276,7 @@
                     <th class="text-end" style="width: 120px;">Jobs</th>
                     <th class="text-end" style="width: 120px;">Processes</th>
                     <th class="text-end" style="width: 180px;">Wait</th>
-                    <th class="text-end" style="width: 120px;"></th>
+                    <th class="text-end" style="width: 120px;" v-if="$canManage"></th>
                 </tr>
                 </thead>
 
@@ -290,8 +290,8 @@
                             <td class="text-end text-muted" :class="{ 'fw-bold': queue.split_queues }">{{ queue.length ? queue.length.toLocaleString() : 0 }}</td>
                             <td class="text-end text-muted" :class="{ 'fw-bold': queue.split_queues }">{{ queue.processes ? queue.processes.toLocaleString() : 0 }}</td>
                             <td class="text-end text-muted" :class="{ 'fw-bold': queue.split_queues }">{{ humanTime(queue.wait) }}</td>
-                            <td class="text-end">
-                                <button v-if="! queue.split_queues" class="btn btn-outline-primary btn-sm" @click="toggleQueue(queue.connection, queue)">
+                            <td class="text-end" v-if="$canManage">
+                                <button v-if="$canManage && ! queue.split_queues" class="btn btn-outline-primary btn-sm" @click="toggleQueue(queue.connection, queue)">
                                     {{ queue.paused ? 'Resume' : 'Pause' }}
                                 </button>
                             </td>
@@ -309,8 +309,8 @@
                             <td class="text-end text-muted">{{ split_queue.length ? split_queue.length.toLocaleString() : 0 }}</td>
                             <td class="text-end text-muted">-</td>
                             <td class="text-end text-muted">{{ humanTime(split_queue.wait) }}</td>
-                            <td class="text-end">
-                                <button class="btn btn-outline-primary btn-sm" @click="toggleQueue(queue.connection, split_queue)">
+                            <td class="text-end" v-if="$canManage">
+                                <button v-if="$canManage" class="btn btn-outline-primary btn-sm" @click="toggleQueue(queue.connection, split_queue)">
                                     {{ split_queue.paused ? 'Resume' : 'Pause' }}
                                 </button>
                             </td>
