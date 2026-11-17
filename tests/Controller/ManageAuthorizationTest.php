@@ -31,6 +31,14 @@ class ManageAuthorizationTest extends ControllerTest
         $this->actingAs($user)->postJson('/horizon/api/jobs/retry/some-id')->assertForbidden();
         $this->actingAs($user)->postJson('/horizon/api/batches/retry/some-id')->assertForbidden();
 
+        $this->actingAs($user)->postJson('/horizon/api/queues/pause', ['connection' => 'redis', 'queue' => 'default'])->assertForbidden();
+        $this->actingAs($user)->postJson('/horizon/api/queues/resume', ['connection' => 'redis', 'queue' => 'default'])->assertForbidden();
+        $this->actingAs($user)->deleteJson('/horizon/api/jobs/pending/some-id')->assertForbidden();
+        $this->actingAs($user)->postJson('/horizon/api/jobs/pending/some-id/run')->assertForbidden();
+        $this->actingAs($user)->postJson('/horizon/api/jobs/retry', ['ids' => ['some-id']])->assertForbidden();
+        $this->actingAs($user)->deleteJson('/horizon/api/jobs/failed', ['ids' => ['some-id']])->assertForbidden();
+        $this->actingAs($user)->deleteJson('/horizon/api/unique-locks', ['key' => 'laravel_unique_job:X:1'])->assertForbidden();
+
         $this->actingAs($user)->getJson('/horizon/api/stats')->assertOk();
         $this->actingAs($user)->getJson('/horizon/api/monitoring')->assertOk();
 
