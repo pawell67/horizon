@@ -32,6 +32,10 @@ Route::prefix('api')->group(function () {
     Route::post('/queues/pause', 'QueuesController@pause')->name('horizon.queues.pause');
     Route::post('/queues/resume', 'QueuesController@resume')->name('horizon.queues.resume');
 
+    // Unique Lock Routes...
+    Route::get('/unique-locks', 'UniqueLocksController@index')->name('horizon.unique-locks.index');
+    Route::delete('/unique-locks', 'UniqueLocksController@destroy')->name('horizon.unique-locks.destroy');
+
     // Batches Routes...
     Route::get('/batches', 'BatchesController@index')->name('horizon.jobs-batches.index');
     Route::get('/batches/{id}', 'BatchesController@show')->name('horizon.jobs-batches.show');
