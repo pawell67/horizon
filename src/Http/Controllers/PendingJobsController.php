@@ -8,6 +8,8 @@ use Laravel\Horizon\RedisQueue;
 
 class PendingJobsController extends Controller
 {
+    use SearchesJobs;
+
     /**
      * The job repository implementation.
      *
@@ -36,6 +38,10 @@ class PendingJobsController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->filled('search')) {
+            return $this->search($request, 'pending');
+        }
+
         $jobs = $this->jobs
             ->getPending($request->query('starting_at', -1))
             ->map(function ($job) {
